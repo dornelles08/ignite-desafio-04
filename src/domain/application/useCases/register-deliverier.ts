@@ -2,7 +2,7 @@ import { Either, left, right } from "@/core/either";
 import { User } from "@/domain/enterprise/entities/user";
 import { Injectable } from "@nestjs/common";
 import { HashGenerator } from "../cryptography/hash-generator";
-import { CpfValidator } from "../helpers/cpf-validator";
+import { cpfValidator } from "../helpers/cpf-validator";
 import { UserRepository } from "../repositories/users.repository";
 import { CpfInvalidError } from "./errors/CpfInvalid.error";
 import { UserAlreadyExistsError } from "./errors/UserAlreadyExists.error";
@@ -23,11 +23,7 @@ type RegisterDeliverierResponse = Either<
 
 @Injectable()
 export class RegisterDeliverierUseCase {
-  constructor(
-    private hashGenerator: HashGenerator,
-    private userRepository: UserRepository,
-    private cpfValidator: CpfValidator
-  ) {}
+  constructor(private hashGenerator: HashGenerator, private userRepository: UserRepository) {}
 
   async execute({
     name,
@@ -35,7 +31,7 @@ export class RegisterDeliverierUseCase {
     password,
     cpf,
   }: RegisterDeliverierRequest): Promise<RegisterDeliverierResponse> {
-    const isCpfValid = this.cpfValidator.valid(cpf);
+    const isCpfValid = cpfValidator(cpf);
 
     if (!isCpfValid) {
       return left(new CpfInvalidError());

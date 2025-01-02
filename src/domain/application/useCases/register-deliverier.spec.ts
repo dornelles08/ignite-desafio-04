@@ -1,7 +1,7 @@
 import { FakeHahser } from "test/cryptography/fake-hasher";
 import { makeUser } from "test/factories/make-user";
 import { generateCPF } from "test/helpers/generate-cpf";
-import { ValidCpfTest } from "test/helpers/valid-cpf";
+
 import { InMemoryUserRepository } from "test/repositories/in-memory-user.repository";
 import { CpfInvalidError } from "./errors/CpfInvalid.error";
 import { UserAlreadyExistsError } from "./errors/UserAlreadyExists.error";
@@ -9,15 +9,14 @@ import { RegisterDeliverierUseCase } from "./register-deliverier";
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let fakeHasher: FakeHahser;
-let validCpf: ValidCpfTest;
+
 let sut: RegisterDeliverierUseCase;
 
 describe("Create User", () => {
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository();
     fakeHasher = new FakeHahser();
-    validCpf = new ValidCpfTest();
-    sut = new RegisterDeliverierUseCase(fakeHasher, inMemoryUserRepository, validCpf);
+    sut = new RegisterDeliverierUseCase(fakeHasher, inMemoryUserRepository);
   });
 
   it("should be able to create a user", async () => {
