@@ -1,6 +1,8 @@
-import { Either, right } from "@/core/either";
+import { Either, left, right } from "@/core/either";
 import { Recipient } from "@/domain/enterprise/entities/recipient";
+import { Injectable } from "@nestjs/common";
 import { RecipientRepository } from "../repositories/recipient.repository";
+import { UnkownError } from "./errors/UnkownError.error";
 
 interface CreateRecipientRequest {
   name: string;
@@ -16,12 +18,13 @@ interface CreateRecipientRequest {
 }
 
 type CreateRecipientResponse = Either<
-  null,
+  UnkownError,
   {
     recipient: Recipient;
   }
 >;
 
+@Injectable()
 export class CreateRecipientUseCase {
   constructor(private recipientRepository: RecipientRepository) {}
 
@@ -37,23 +40,29 @@ export class CreateRecipientUseCase {
     state,
     zipCode,
   }: CreateRecipientRequest): Promise<CreateRecipientResponse> {
-    const recipient = Recipient.create({
-      name,
-      cpf,
-      phone,
-      street,
-      number,
-      complement,
-      district,
-      city,
-      state,
-      zipCode,
-    });
+    try {
+      const recipient = Recipient.create({
+        name,
+        cpf,
+        phone,
+        street,
+        number,
+        complement,
+        district,
+        city,
+        state,
+        zipCode,
+      });
 
-    await this.recipientRepository.create(recipient);
+      await this.recipientRepository.create(recipient);
 
-    return right({
-      recipient,
-    });
+      return right({
+        recipient,
+      });
+    } catch (error) {
+      console.log(error);
+
+      return left(new UnkownError());
+    }
   }
 }
