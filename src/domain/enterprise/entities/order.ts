@@ -32,6 +32,9 @@ export class Order extends Entity<OrderProps> {
   get createdAt() {
     return this.props.createdAt;
   }
+  get deliverierId() {
+    return this.props.deliverierId;
+  }
   get updatedAt() {
     return this.props.updatedAt;
   }
