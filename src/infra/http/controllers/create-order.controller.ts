@@ -1,5 +1,5 @@
 import { CreateOrderUseCase } from "@/domain/application/useCases/create-order";
-import { RecipientNotFoundError } from "@/domain/application/useCases/errors/RecipientNotFoundError";
+import { RecipientNotFound } from "@/domain/application/useCases/errors/RecipientNotFound.error";
 import { Roles } from "@/infra/auth/roles.decorator";
 import {
   Body,
@@ -7,7 +7,7 @@ import {
   HttpCode,
   InternalServerErrorException,
   NotFoundException,
-  Post
+  Post,
 } from "@nestjs/common";
 import { z } from "zod";
 import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
@@ -35,7 +35,7 @@ export class CreateOrderController {
     if (result.isLeft()) {
       const error = result.value;
       switch (error.constructor) {
-        case RecipientNotFoundError:
+        case RecipientNotFound:
           throw new NotFoundException(error.message);
         default:
           throw new InternalServerErrorException();

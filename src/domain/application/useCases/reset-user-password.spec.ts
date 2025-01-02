@@ -3,7 +3,8 @@ import { generateCPF } from "test/helpers/generate-cpf";
 
 import { makeUser } from "test/factories/make-user";
 import { InMemoryUserRepository } from "test/repositories/in-memory-user.repository";
-import { UserNotFoundError } from "./errors/UserNotFoundError";
+
+import { NotFound } from "./errors/NotFound";
 import { ResetUserPasswordUseCase } from "./reset-user-password";
 
 let inMemoryUserRepository: InMemoryUserRepository;
@@ -47,7 +48,7 @@ describe("Reset a User Password", () => {
     });
 
     expect(result.isLeft()).toBeTruthy();
-    expect(result.value).toBeInstanceOf(UserNotFoundError);
+    expect(result.value).toBeInstanceOf(NotFound);
   });
 
   it("should not be able to reset user password with a wrong cpf", async () => {
@@ -63,7 +64,7 @@ describe("Reset a User Password", () => {
     });
 
     expect(result.isLeft()).toBeTruthy();
-    expect(result.value).toBeInstanceOf(UserNotFoundError);
+    expect(result.value).toBeInstanceOf(NotFound);
   });
 
   it("should not be able to reset user password with a wrong user id", async () => {
@@ -79,7 +80,7 @@ describe("Reset a User Password", () => {
     });
 
     expect(result.isLeft()).toBeTruthy();
-    expect(result.value).toBeInstanceOf(UserNotFoundError);
+    expect(result.value).toBeInstanceOf(NotFound);
   });
 
   it("should not be able to reset user password with a wrong user id", async () => {

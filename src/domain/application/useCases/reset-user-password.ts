@@ -3,8 +3,8 @@ import { User } from "@/domain/enterprise/entities/user";
 import { Injectable } from "@nestjs/common";
 import { HashGenerator } from "../cryptography/hash-generator";
 import { UserRepository } from "../repositories/users.repository";
+import { NotFound } from "./errors/NotFound";
 import { UnkownError } from "./errors/UnkownError.error";
-import { UserNotFoundError } from "./errors/UserNotFoundError";
 
 interface ResetUserPasswordRequest {
   userId: string;
@@ -13,7 +13,7 @@ interface ResetUserPasswordRequest {
   password: string;
 }
 
-type ResetUserPasswordResponse = Either<UserNotFoundError | UnkownError, { user: User }>;
+type ResetUserPasswordResponse = Either<NotFound | UnkownError, { user: User }>;
 
 @Injectable()
 export class ResetUserPasswordUseCase {
@@ -29,7 +29,7 @@ export class ResetUserPasswordUseCase {
       const user = await this.userRepository.findByIdCpfEmail(userId, cpf, email);
 
       if (!user) {
-        return left(new UserNotFoundError());
+        return left(new NotFound("User"));
       }
 
       const hashedPassword = await this.hashGenerator.hash(password);

@@ -1,13 +1,13 @@
 import { AuthenticateUserUseCase } from "@/domain/application/useCases/authenticate-user";
-import { WrongCredentialsExistsError } from "@/domain/application/useCases/errors/WrongCredentialsExists.error";
+import { WrongCredentialsExists } from "@/domain/application/useCases/errors/WrongCredentialsExists.error";
 import { Public } from "@/infra/auth/public";
 import {
-  BadRequestException,
   Body,
   Controller,
   HttpCode,
   InternalServerErrorException,
   Post,
+  UnauthorizedException
 } from "@nestjs/common";
 import { z } from "zod";
 import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
@@ -39,8 +39,8 @@ export class AuthenticateUserController {
     if (result.isLeft()) {
       const error = result.value;
       switch (error.constructor) {
-        case WrongCredentialsExistsError:
-          throw new BadRequestException(error.message);
+        case WrongCredentialsExists:
+          throw new UnauthorizedException(error.message);
         default:
           throw new InternalServerErrorException();
       }

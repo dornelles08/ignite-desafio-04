@@ -4,7 +4,7 @@ import { Encrypter } from "../cryptography/encrypter";
 import { HashComparer } from "../cryptography/hash-comparer";
 import { UserRepository } from "../repositories/users.repository";
 import { UnkownError } from "./errors/UnkownError.error";
-import { WrongCredentialsExistsError } from "./errors/WrongCredentialsExists.error";
+import { WrongCredentialsExists } from "./errors/WrongCredentialsExists.error";
 
 interface AuthenticateUserRequest {
   password: string;
@@ -12,7 +12,7 @@ interface AuthenticateUserRequest {
 }
 
 type AuthenticateUserResponse = Either<
-  WrongCredentialsExistsError | UnkownError,
+  WrongCredentialsExists | UnkownError,
   {
     accessToken: string;
   }
@@ -31,13 +31,13 @@ export class AuthenticateUserUseCase {
       const user = await this.userRepository.findByCpf(cpf);
 
       if (!user) {
-        return left(new WrongCredentialsExistsError());
+        return left(new WrongCredentialsExists());
       }
 
       const isPasswordValid = await this.hashComparer.compare(password, user.password);
 
       if (!isPasswordValid) {
-        return left(new WrongCredentialsExistsError());
+        return left(new WrongCredentialsExists());
       }
 
       const accessToken = await this.encrypter.encrypt({

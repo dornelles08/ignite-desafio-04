@@ -1,4 +1,4 @@
-export class RecipientNotFoundError extends Error {
+export class RecipientNotFound extends Error {
   constructor() {
     super("Recipient not found");
   }

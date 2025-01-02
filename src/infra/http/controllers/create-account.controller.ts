@@ -1,5 +1,5 @@
-import { CpfInvalidError } from "@/domain/application/useCases/errors/CpfInvalid.error";
-import { UserAlreadyExistsError } from "@/domain/application/useCases/errors/UserAlreadyExists.error";
+import { CpfInvalid } from "@/domain/application/useCases/errors/CpfInvalid.error";
+import { UserAlreadyExists } from "@/domain/application/useCases/errors/UserAlreadyExists.error";
 import { RegisterDeliverierUseCase } from "@/domain/application/useCases/register-deliverier";
 import { Roles } from "@/infra/auth/roles.decorator";
 import {
@@ -45,9 +45,9 @@ export class CreateAccountController {
     if (result.isLeft()) {
       const error = result.value;
       switch (error.constructor) {
-        case UserAlreadyExistsError:
+        case UserAlreadyExists:
           throw new ConflictException(error.message);
-        case CpfInvalidError:
+        case CpfInvalid:
           throw new BadRequestException(error.message);
         default:
           throw new InternalServerErrorException();

@@ -4,9 +4,9 @@ import { Injectable } from "@nestjs/common";
 import { HashGenerator } from "../cryptography/hash-generator";
 import { cpfValidator } from "../helpers/cpf-validator";
 import { UserRepository } from "../repositories/users.repository";
-import { CpfInvalidError } from "./errors/CpfInvalid.error";
+import { CpfInvalid } from "./errors/CpfInvalid.error";
 import { UnkownError } from "./errors/UnkownError.error";
-import { UserAlreadyExistsError } from "./errors/UserAlreadyExists.error";
+import { UserAlreadyExists } from "./errors/UserAlreadyExists.error";
 
 interface RegisterDeliverierRequest {
   name: string;
@@ -16,7 +16,7 @@ interface RegisterDeliverierRequest {
 }
 
 type RegisterDeliverierResponse = Either<
-  UserAlreadyExistsError | CpfInvalidError | UnkownError,
+  UserAlreadyExists | CpfInvalid | UnkownError,
   {
     user: User;
   }
@@ -36,7 +36,7 @@ export class RegisterDeliverierUseCase {
       const isCpfValid = cpfValidator(cpf);
 
       if (!isCpfValid) {
-        return left(new CpfInvalidError());
+        return left(new CpfInvalid());
       }
 
       const [emailExists, cpfExists] = await Promise.all([
@@ -45,7 +45,7 @@ export class RegisterDeliverierUseCase {
       ]);
 
       if (emailExists || cpfExists) {
-        return left(new UserAlreadyExistsError());
+        return left(new UserAlreadyExists());
       }
 
       const hashedPassword = await this.hashGenerator.hash(password);

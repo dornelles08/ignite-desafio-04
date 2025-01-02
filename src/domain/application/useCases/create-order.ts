@@ -3,7 +3,7 @@ import { Order } from "@/domain/enterprise/entities/order";
 import { Injectable } from "@nestjs/common";
 import { OrderRepository } from "../repositories/order.repository";
 import { RecipientRepository } from "../repositories/recipient.repository";
-import { RecipientNotFoundError } from "./errors/RecipientNotFoundError";
+import { RecipientNotFound } from "./errors/RecipientNotFound.error";
 import { UnkownError } from "./errors/UnkownError.error";
 
 interface CreateOrderRequest {
@@ -11,7 +11,7 @@ interface CreateOrderRequest {
 }
 
 type CreateOrderResponse = Either<
-  RecipientNotFoundError | UnkownError,
+  RecipientNotFound | UnkownError,
   {
     order: Order;
   }
@@ -29,7 +29,7 @@ export class CreateOrderUseCase {
       const recipientExists = await this.recipientRepository.findById(recipientId);
 
       if (!recipientExists) {
-        return left(new RecipientNotFoundError());
+        return left(new RecipientNotFound());
       }
 
       const order = Order.create({

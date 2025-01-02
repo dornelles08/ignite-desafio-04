@@ -3,8 +3,9 @@ import { makeUser } from "test/factories/make-user";
 import { generateCPF } from "test/helpers/generate-cpf";
 
 import { InMemoryUserRepository } from "test/repositories/in-memory-user.repository";
-import { CpfInvalidError } from "./errors/CpfInvalid.error";
-import { UserAlreadyExistsError } from "./errors/UserAlreadyExists.error";
+
+import { CpfInvalid } from "./errors/CpfInvalid.error";
+import { UserAlreadyExists } from "./errors/UserAlreadyExists.error";
 import { RegisterDeliverierUseCase } from "./register-deliverier";
 
 let inMemoryUserRepository: InMemoryUserRepository;
@@ -43,7 +44,7 @@ describe("Register Deliverier", () => {
     });
 
     expect(result.isLeft()).toBeTruthy();
-    expect(result.value).toBeInstanceOf(UserAlreadyExistsError);
+    expect(result.value).toBeInstanceOf(UserAlreadyExists);
   });
 
   it("should not be able to create a user with a exists cpf", async () => {
@@ -58,7 +59,7 @@ describe("Register Deliverier", () => {
     });
 
     expect(result.isLeft()).toBeTruthy();
-    expect(result.value).toBeInstanceOf(UserAlreadyExistsError);
+    expect(result.value).toBeInstanceOf(UserAlreadyExists);
   });
 
   it("should not be able to create a user with a invalid cpf", async () => {
@@ -70,7 +71,7 @@ describe("Register Deliverier", () => {
     });
 
     expect(result.isLeft()).toBeTruthy();
-    expect(result.value).toBeInstanceOf(CpfInvalidError);
+    expect(result.value).toBeInstanceOf(CpfInvalid);
   });
 
   it("should hash user password upon registration", async () => {

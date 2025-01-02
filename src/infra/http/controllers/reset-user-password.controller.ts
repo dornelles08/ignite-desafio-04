@@ -1,4 +1,4 @@
-import { UserNotFoundError } from "@/domain/application/useCases/errors/UserNotFoundError";
+import { NotFound } from "@/domain/application/useCases/errors/NotFound";
 import { ResetUserPasswordUseCase } from "@/domain/application/useCases/reset-user-password";
 import { Roles } from "@/infra/auth/roles.decorator";
 import {
@@ -44,8 +44,8 @@ export class ResetUserPasswordController {
     if (result.isLeft()) {
       const error = result.value;
       switch (error.constructor) {
-        case UserNotFoundError:
-          throw new NotFoundException();
+        case NotFound:
+          throw new NotFoundException(error.message);
         default:
           throw new InternalServerErrorException();
       }

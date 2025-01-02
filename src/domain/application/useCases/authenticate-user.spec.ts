@@ -4,7 +4,7 @@ import { makeUser } from "test/factories/make-user";
 import { generateCPF } from "test/helpers/generate-cpf";
 import { InMemoryUserRepository } from "test/repositories/in-memory-user.repository";
 import { AuthenticateUserUseCase } from "./authenticate-user";
-import { WrongCredentialsExistsError } from "./errors/WrongCredentialsExists.error";
+import { WrongCredentialsExists } from "./errors/WrongCredentialsExists.error";
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let fakeHasher: FakeHahser;
@@ -56,7 +56,7 @@ describe("Authenticate User", () => {
     });
 
     expect(result.isLeft()).toBeTruthy();
-    expect(result.value).toBeInstanceOf(WrongCredentialsExistsError);
+    expect(result.value).toBeInstanceOf(WrongCredentialsExists);
   });
 
   it("should not be able to authenticate a user with wrong cpf", async () => {
@@ -73,6 +73,6 @@ describe("Authenticate User", () => {
     });
 
     expect(result.isLeft()).toBeTruthy();
-    expect(result.value).toBeInstanceOf(WrongCredentialsExistsError);
+    expect(result.value).toBeInstanceOf(WrongCredentialsExists);
   });
 });
