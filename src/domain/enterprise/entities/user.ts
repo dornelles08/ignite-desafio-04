@@ -46,4 +46,13 @@ export class User extends Entity<UserProps> {
   get role() {
     return this.props.role;
   }
+
+  set password(newPassword: string) {
+    this.props.password = newPassword;
+    this.touch();
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date();
+  }
 }

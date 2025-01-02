@@ -5,5 +5,7 @@ export abstract class UserRepository {
   abstract findById(id: string): Promise<User | null>;
   abstract findByEmail(email: string): Promise<User | null>;
   abstract findByCpf(cpf: string): Promise<User | null>;
+  abstract findByCpfEmail(cpf: string, email: string): Promise<User | null>;
+  abstract findByIdCpfEmail(id: string, cpf: string, email: string): Promise<User | null>;
   abstract save(user: User): Promise<void>;
 }

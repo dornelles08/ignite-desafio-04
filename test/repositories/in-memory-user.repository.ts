@@ -42,4 +42,26 @@ export class InMemoryUserRepository implements UserRepository {
     const itemIndex = this.items.findIndex((item) => item.id === user.id);
     this.items[itemIndex] = user;
   }
+
+  async findByCpfEmail(cpf: string, email: string): Promise<User | null> {
+    const user = this.items.find((item) => item.cpf === cpf && item.email === email);
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  }
+
+  async findByIdCpfEmail(id: string, cpf: string, email: string): Promise<User | null> {
+    const user = this.items.find(
+      (item) => item.cpf === cpf && item.id === id && item.email === email
+    );
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  }
 }
