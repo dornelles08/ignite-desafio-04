@@ -2,7 +2,7 @@ import { Entity } from "src/core/entities/entity";
 import { Optional } from "src/core/types/optional";
 import { Role } from "./role";
 
-export interface UserProsps {
+export interface UserProps {
   name: string;
   email: string;
   cpf: string;
@@ -12,8 +12,8 @@ export interface UserProsps {
   updatedAt?: Date | null;
 }
 
-export class User extends Entity<UserProsps> {
-  static create(props: Optional<UserProsps, "createdAt" | "role">, id?: string) {
+export class User extends Entity<UserProps> {
+  static create(props: Optional<UserProps, "createdAt" | "role">, id?: string) {
     const user = new User(
       {
         ...props,

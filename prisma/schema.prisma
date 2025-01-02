@@ -30,5 +30,53 @@ model User {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
 
+  orders Order[]
+
   @@map("users")
+}
+
+model Recipient {
+  id String @id @default(uuid())
+
+  name       String
+  cpf        String
+  phone      String
+  street     String
+  number     String
+  complement String?
+  district   String
+  city       String
+  state      String
+  zipCode    String
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  orders Order[]
+
+  @@map("recipients")
+}
+
+enum OrderStatus {
+  CREATED
+  WAITING
+  PICKUP
+  DELIVERED
+  RETURNED
+}
+
+model Order {
+  id           String      @id @default(uuid())
+  recipientId  String
+  deliverierId String?
+  status       OrderStatus @default(CREATED)
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  deliverier User? @relation(fields: [deliverierId], references: [id])
+
+  recipient Recipient @relation(fields: [recipientId], references: [id])
+
+  @@map("orders")
 }
