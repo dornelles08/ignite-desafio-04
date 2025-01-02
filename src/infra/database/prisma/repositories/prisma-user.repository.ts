@@ -52,4 +52,24 @@ export class PrismaUserRepository implements UserRepository {
       data,
     });
   }
+
+  async findByCpfEmail(cpf: string, email: string): Promise<User | null> {
+    const user = await this.prisma.user.findUnique({
+      where: { cpf, email },
+    });
+
+    if (!user) return null;
+
+    return PrismaUserMapper.toDomain(user);
+  }
+
+  async findByIdCpfEmail(id: string, cpf: string, email: string): Promise<User | null> {
+    const user = await this.prisma.user.findUnique({
+      where: { cpf, email, id },
+    });
+
+    if (!user) return null;
+
+    return PrismaUserMapper.toDomain(user);
+  }
 }

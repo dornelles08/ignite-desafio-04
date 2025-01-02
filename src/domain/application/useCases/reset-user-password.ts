@@ -1,5 +1,6 @@
 import { Either, left, right } from "@/core/either";
 import { User } from "@/domain/enterprise/entities/user";
+import { Injectable } from "@nestjs/common";
 import { HashGenerator } from "../cryptography/hash-generator";
 import { UserRepository } from "../repositories/users.repository";
 import { UnkownError } from "./errors/UnkownError.error";
@@ -14,6 +15,7 @@ interface ResetUserPasswordRequest {
 
 type ResetUserPasswordResponse = Either<UserNotFoundError | UnkownError, { user: User }>;
 
+@Injectable()
 export class ResetUserPasswordUseCase {
   constructor(private hashGenerator: HashGenerator, private userRepository: UserRepository) {}
 
