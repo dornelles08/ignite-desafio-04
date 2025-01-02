@@ -2,6 +2,7 @@ import { CpfInvalidError } from "@/domain/application/useCases/errors/CpfInvalid
 import { UserAlreadyExistsError } from "@/domain/application/useCases/errors/UserAlreadyExists.error";
 import { RegisterDeliverierUseCase } from "@/domain/application/useCases/register-deliverier";
 import { Public } from "@/infra/auth/public";
+import { Roles } from "@/infra/auth/roles.decorator";
 import {
   BadRequestException,
   Body,
@@ -30,6 +31,7 @@ export class CreateAccountController {
   @Post()
   @HttpCode(201)
   @Public()
+  @Roles("ADMIN")
   async handle(
     @Body(new ZodValidationPipe(createAccountBodySchema)) body: CreateAccountBodySchema
   ) {
