@@ -2,7 +2,7 @@
 
 - [X] A aplicação deve ter dois tipos de usuário, entregador e/ou admin
 - [] Deve ser possível realizar login com CPF e Senha
-- [X] Deve ser possível realizar o CRUD dos entregadores
+- [] Deve ser possível realizar o CRUD dos entregadores
 - [] Deve ser possível realizar o CRUD das encomendas
 - [] Deve ser possível realizar o CRUD dos destinatários
 - [] Deve ser possível marcar uma encomenda como aguardando (Disponível para retirada)

@@ -1,4 +1,4 @@
-export function generateCPF(formatado: boolean = true): string {
+export function generateCPF(formatado: boolean = false): string {
   const calcularDigito = (base: number[]): number => {
     const pesoInicial = base.length + 1;
     const soma = base.reduce((acc, num, index) => acc + num * (pesoInicial - index), 0);

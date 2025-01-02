@@ -25,7 +25,7 @@ describe("Create User", () => {
       name: "John Doe",
       email: "johndoe@example.com",
       password: "123456",
-      cpf: generateCPF(false),
+      cpf: generateCPF(),
     });
 
     expect(result.isRight()).toBeTruthy();
@@ -48,7 +48,7 @@ describe("Create User", () => {
   });
 
   it("should not be able to create a user with a exists cpf", async () => {
-    const cpf = generateCPF(false);
+    const cpf = generateCPF();
     inMemoryUserRepository.items.push(makeUser({ cpf }));
 
     const result = await sut.execute({
@@ -79,7 +79,7 @@ describe("Create User", () => {
       name: "John Doe",
       email: "johndoe@example.com",
       password: "123456",
-      cpf: generateCPF(false),
+      cpf: generateCPF(),
     });
 
     const passwordHashed = await fakeHasher.hash("123456");
