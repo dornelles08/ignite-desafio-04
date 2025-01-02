@@ -1,0 +1,35 @@
+@baseUrl = http://localhost:3333
+@authToken = {{authenticate.response.body.access_token}}
+
+# @name create_account
+POST {{baseUrl}}/accounts
+Content-Type: application/json
+
+{
+  "name": "Felipe Teles",
+  "email": "lipe.dornelles08@gmail.com",
+  "cpf": "60467802092",
+  "password": "123456"
+}
+
+###
+
+# @name authenticate
+POST {{baseUrl}}/authenticate
+Content-Type: application/json
+
+{
+  "cpf": "60467802092", 
+  "password": "123456"
+}
+
+###
+
+# @name fetch_recent_question
+PATCH {{baseUrl}}/order/1/status
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "status": "created"
+}
