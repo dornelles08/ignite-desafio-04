@@ -12,7 +12,7 @@ let fakeHasher: FakeHahser;
 
 let sut: RegisterDeliverierUseCase;
 
-describe("Create User", () => {
+describe("Register Deliverier", () => {
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository();
     fakeHasher = new FakeHahser();

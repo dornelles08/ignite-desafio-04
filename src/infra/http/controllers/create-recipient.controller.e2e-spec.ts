@@ -7,7 +7,7 @@ import { Test } from "@nestjs/testing";
 import request from "supertest";
 import { UserFactory } from "test/factories/make-user";
 
-describe("Create account (E2E)", () => {
+describe("Create Recipient (E2E)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let jwt: JwtService;
@@ -51,12 +51,12 @@ describe("Create account (E2E)", () => {
 
     expect(response.statusCode).toBe(201);
 
-    const userOnDatabase = await prisma.recipient.findFirst({
+    const recipientOnDatabase = await prisma.recipient.findFirst({
       where: {
         name: "Gael Sebastião Luan Assis",
       },
     });
 
-    expect(userOnDatabase).toBeTruthy();
+    expect(recipientOnDatabase).toBeTruthy();
   });
 });

@@ -7,7 +7,7 @@ let inMemoryRecipientRepository: InMemoryRecipientRepository;
 // System under test
 let sut: CreateRecipientUseCase;
 
-describe("Authenticate Recipient", () => {
+describe("Create Recipient", () => {
   beforeEach(() => {
     inMemoryRecipientRepository = new InMemoryRecipientRepository();
 
