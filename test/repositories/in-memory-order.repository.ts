@@ -1,3 +1,4 @@
+import { PaginationParams } from "@/core/repositories/pagination-params";
 import { OrderRepository } from "@/domain/application/repositories/order.repository";
 import { Order } from "@/domain/enterprise/entities/order";
 
@@ -20,6 +21,14 @@ export class InMemoryOrderRepository implements OrderRepository {
 
   async findByRecipientId(recipientId: string): Promise<Order[]> {
     const order = this.items.filter((item) => item.recipientId === recipientId);
+
+    return order;
+  }
+
+  async findByDeliverierId(deliverierId: string, { page }: PaginationParams): Promise<Order[]> {
+    const order = this.items
+      .filter((item) => item.deliverierId === deliverierId)
+      .slice((page - 1) * 20, page * 20);
 
     return order;
   }

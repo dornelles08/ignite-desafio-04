@@ -1,3 +1,4 @@
+import { PaginationParams } from "@/core/repositories/pagination-params";
 import { OrderRepository } from "@/domain/application/repositories/order.repository";
 import { Order } from "@/domain/enterprise/entities/order";
 import { Injectable } from "@nestjs/common";
@@ -29,6 +30,21 @@ export class PrismaOrderRepository implements OrderRepository {
       where: {
         recipientId,
       },
+    });
+
+    return orders.map(PrismaOrderMapper.toDomain);
+  }
+
+  async findByDeliverierId(deliverierId: string, { page }: PaginationParams): Promise<Order[]> {
+    const orders = await this.prisma.order.findMany({
+      where: {
+        deliverierId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 20,
+      skip: (page - 1) * 20,
     });
 
     return orders.map(PrismaOrderMapper.toDomain);
