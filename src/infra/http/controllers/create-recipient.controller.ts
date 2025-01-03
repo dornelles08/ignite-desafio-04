@@ -45,11 +45,5 @@ export class CreateRecipientController {
     if (result.isLeft()) {
       throw new InternalServerErrorException();
     }
-
-    const { recipient } = result.value;
-
-    return {
-      recipientId: recipient.id.toString(),
-    };
   }
 }
