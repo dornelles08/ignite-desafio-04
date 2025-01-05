@@ -11,6 +11,7 @@ import { ReturnOrderUseCase } from "@/domain/application/useCases/return-order";
 import { Module } from "@nestjs/common";
 import { CryptographyModule } from "../cryprography/cryptography.module";
 import { DatabaseModule } from "../database/database.module";
+import { StorageModule } from "../storage/storage.module";
 import { AuthenticateUserController } from "./controllers/authenticate-user.controller";
 import { CreateAccountController } from "./controllers/create-account.controller";
 import { CreateOrderController } from "./controllers/create-order.controller";
@@ -23,7 +24,7 @@ import { ResetUserPasswordController } from "./controllers/reset-user-password.c
 import { ReturnOrderController } from "./controllers/return-order.controller";
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [DatabaseModule, CryptographyModule, StorageModule],
   controllers: [
     CreateAccountController,
     AuthenticateUserController,
