@@ -26,6 +26,19 @@ describe("Fetch Deliverier Orders", () => {
     expect(result.value?.orders).toHaveLength(2);
   });
 
+  it("should not be able to fetch orders from another deliverier", async () => {
+    const user1 = makeUser();
+    const user2 = makeUser();
+
+    inMemoryOrderRepository.items.push(makeOrder({ deliverierId: user1.id }));
+    inMemoryOrderRepository.items.push(makeOrder({ deliverierId: user1.id }));
+
+    const result = await sut.execute({ deliverierId: user2.id, page: 1 });
+
+    expect(result.isRight()).toBeTruthy();
+    expect(result.value?.orders).toHaveLength(0);
+  });
+
   it("should be able to fetch paginated question answers", async () => {
     const user = makeUser();
 
