@@ -1,6 +1,7 @@
 import { AuthenticateUserUseCase } from "@/domain/application/useCases/authenticate-user";
 import { CreateOrderUseCase } from "@/domain/application/useCases/create-order";
 import { CreateRecipientUseCase } from "@/domain/application/useCases/create-recipient";
+import { DeliveryOrderUseCase } from "@/domain/application/useCases/delivery-order";
 import { FetchDeliverierOrdersUseCase } from "@/domain/application/useCases/fetch-deliverier-orders";
 import { MarkOrderAsWaitingUseCase } from "@/domain/application/useCases/mark-order-as-waiting";
 import { PickupOrderUseCase } from "@/domain/application/useCases/pickup-order";
@@ -13,6 +14,7 @@ import { AuthenticateUserController } from "./controllers/authenticate-user.cont
 import { CreateAccountController } from "./controllers/create-account.controller";
 import { CreateOrderController } from "./controllers/create-order.controller";
 import { CreateRecipientController } from "./controllers/create-recipient.controller";
+import { DeliveryOrderController } from "./controllers/delivery-order.controller";
 import { FetchDeliverierOrdersController } from "./controllers/fetch-deliverier-orders.controller";
 import { MarkOrderAsWaitingController } from "./controllers/mark-order-as-waiting.controller";
 import { PickupOrderController } from "./controllers/pickup-order.controller";
@@ -29,6 +31,7 @@ import { ResetUserPasswordController } from "./controllers/reset-user-password.c
     MarkOrderAsWaitingController,
     FetchDeliverierOrdersController,
     PickupOrderController,
+    DeliveryOrderController,
   ],
   providers: [
     RegisterDeliverierUseCase,
@@ -39,6 +42,7 @@ import { ResetUserPasswordController } from "./controllers/reset-user-password.c
     MarkOrderAsWaitingUseCase,
     FetchDeliverierOrdersUseCase,
     PickupOrderUseCase,
+    DeliveryOrderUseCase,
   ],
 })
 export class HttpModule {}
