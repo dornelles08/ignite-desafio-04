@@ -6,22 +6,21 @@ import { NotAllowed } from "./errors/NotAllowed.error";
 import { NotFound } from "./errors/NotFound";
 import { UnkownError } from "./errors/UnkownError.error";
 
-interface MarkOrderAsWaitingRequest {
+interface ReturnOrderUseCaseRequest {
   orderId: string;
+  userId: string;
 }
 
-type MarkOrderAsWaitingResponse = Either<
-  UnkownError | NotFound,
-  {
-    order: Order;
-  }
->;
+type ReturnOrderUseCaseResponse = Either<NotFound | UnkownError | NotAllowed, { order: Order }>;
 
 @Injectable()
-export class MarkOrderAsWaitingUseCase {
+export class ReturnOrderUseCase {
   constructor(private orderRepository: OrderRepository) {}
 
-  async execute({ orderId }: MarkOrderAsWaitingRequest): Promise<MarkOrderAsWaitingResponse> {
+  async execute({
+    orderId,
+    userId,
+  }: ReturnOrderUseCaseRequest): Promise<ReturnOrderUseCaseResponse> {
     try {
       const order = await this.orderRepository.findById(orderId);
 
@@ -29,17 +28,15 @@ export class MarkOrderAsWaitingUseCase {
         return left(new NotFound("Order"));
       }
 
-      if (order.status !== "CREATED") {
+      if (order.deliverierId !== userId || order.status !== "PICKUP") {
         return left(new NotAllowed());
       }
 
-      order.status = "WAITING";
+      order.status = "RETURNED";
 
       await this.orderRepository.save(order);
 
-      return right({
-        order,
-      });
+      return right({ order });
     } catch (error) {
       return left(new UnkownError());
     }

@@ -2,6 +2,7 @@ import { Either, left, right } from "@/core/either";
 import { Order } from "@/domain/enterprise/entities/order";
 import { Injectable } from "@nestjs/common";
 import { OrderRepository } from "../repositories/order.repository";
+import { NotAllowed } from "./errors/NotAllowed.error";
 import { NotFound } from "./errors/NotFound";
 import { UnkownError } from "./errors/UnkownError.error";
 
@@ -27,6 +28,10 @@ export class PickupOrderUseCase {
 
       if (!order) {
         return left(new NotFound("Order"));
+      }
+
+      if (order.status !== "WAITING") {
+        return left(new NotAllowed());
       }
 
       order.deliverierId = userId;

@@ -9,7 +9,7 @@ import { OrderFactory } from "test/factories/make-order";
 import { RecipientFactory } from "test/factories/make-recipient";
 import { UserFactory } from "test/factories/make-user";
 
-describe("Pickup Order (E2E)", () => {
+describe("Return Order (E2E)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let jwt: JwtService;
@@ -35,19 +35,20 @@ describe("Pickup Order (E2E)", () => {
     await app.init();
   });
 
-  test("[POST] /orders/:orderId/pickup", async () => {
+  test("[POST] /orders/:orderId/return", async () => {
     const user = await userFactory.makePrismaUser({ role: "DELIVERIER" });
     const access_token = jwt.sign({ sub: user.id, role: user.role });
 
     const recipient = await recipientFactory.makePrismaRecipient();
 
     const order = await orderFactory.makePrismaOrder({
-      status: "WAITING",
+      status: "PICKUP",
+      deliverierId: user.id,
       recipientId: recipient.id,
     });
 
     const response = await request(app.getHttpServer())
-      .post(`/orders/${order.id}/pickup`)
+      .post(`/orders/${order.id}/return`)
       .set("Authorization", `Bearer ${access_token}`)
       .send();
 
@@ -61,7 +62,7 @@ describe("Pickup Order (E2E)", () => {
 
     expect(orderOnDatabase).toEqual(
       expect.objectContaining({
-        status: "PICKUP",
+        status: "RETURNED",
       })
     );
   });
