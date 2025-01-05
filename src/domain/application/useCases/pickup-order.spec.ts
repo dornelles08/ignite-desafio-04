@@ -1,36 +1,41 @@
 import { makeOrder } from "test/factories/make-order";
+import { makeUser } from "test/factories/make-user";
 import { InMemoryOrderRepository } from "test/repositories/in-memory-order.repository";
 import { NotFound } from "./errors/NotFound";
-import { MarkOrderAsWaitingUseCase } from "./mark-order-as-waiting";
+import { PickupOrderUseCase } from "./pickup-order";
 
 let inMemoryOrderRepository: InMemoryOrderRepository;
 // System under test
-let sut: MarkOrderAsWaitingUseCase;
+let sut: PickupOrderUseCase;
 
-describe("Mark Order as Waiting", () => {
+describe("Pickup Order", () => {
   beforeEach(() => {
     inMemoryOrderRepository = new InMemoryOrderRepository();
 
-    sut = new MarkOrderAsWaitingUseCase(inMemoryOrderRepository);
+    sut = new PickupOrderUseCase(inMemoryOrderRepository);
   });
 
-  it("should be able to mark a order as waiting", async () => {
+  it("should be able to pickup a order", async () => {
+    const user = makeUser();
     const order = makeOrder();
     inMemoryOrderRepository.items.push(order);
 
     const result = await sut.execute({
       orderId: order.id,
+      userId: user.id,
     });
 
     expect(result.isRight()).toBeTruthy();
     expect(result.value).toEqual({
-      order: expect.objectContaining({ status: "WAITING" }),
+      order: expect.objectContaining({ status: "PICKUP", deliverierId: user.id }),
     });
   });
 
-  it("should not be able to mark a order as waiting if order not exists", async () => {
+  it("should not be able to pickup a unexists order", async () => {
+    const user = makeUser();
     const result = await sut.execute({
       orderId: "order.id",
+      userId: user.id,
     });
 
     expect(result.isLeft()).toBeTruthy();

@@ -8,7 +8,6 @@ export function makeOrder(override: Partial<OrderProps> = {}, id?: string) {
   const order = Order.create(
     {
       recipientId: faker.string.uuid(),
-      deliverierId: faker.string.uuid(),
       status: "CREATED",
       ...override,
     },

@@ -9,7 +9,7 @@ import { OrderFactory } from "test/factories/make-order";
 import { RecipientFactory } from "test/factories/make-recipient";
 import { UserFactory } from "test/factories/make-user";
 
-describe("Mark Order as Waiting (E2E)", () => {
+describe("Pickup Order (E2E)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let jwt: JwtService;
@@ -35,8 +35,8 @@ describe("Mark Order as Waiting (E2E)", () => {
     await app.init();
   });
 
-  test("[POST] /orders/:orderId/waiting", async () => {
-    const user = await userFactory.makePrismaUser({ role: "ADMIN" });
+  test("[POST] /orders/:orderId/pickup", async () => {
+    const user = await userFactory.makePrismaUser({ role: "DELIVERIER" });
     const access_token = jwt.sign({ sub: user.id, role: user.role });
 
     const recipient = await recipientFactory.makePrismaRecipient();
@@ -46,7 +46,7 @@ describe("Mark Order as Waiting (E2E)", () => {
     });
 
     const response = await request(app.getHttpServer())
-      .post(`/orders/${order.id}/waiting`)
+      .post(`/orders/${order.id}/pickup`)
       .set("Authorization", `Bearer ${access_token}`)
       .send();
 
@@ -60,7 +60,7 @@ describe("Mark Order as Waiting (E2E)", () => {
 
     expect(orderOnDatabase).toEqual(
       expect.objectContaining({
-        status: "WAITING",
+        status: "PICKUP",
       })
     );
   });

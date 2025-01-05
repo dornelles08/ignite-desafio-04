@@ -8,14 +8,14 @@ import {
   InternalServerErrorException,
   NotFoundException,
   Param,
-  Patch,
+  Post
 } from "@nestjs/common";
 
-@Controller("/orders/:orderId/status/waiting")
+@Controller("/orders/:orderId/waiting")
 export class MarkOrderAsWaitingController {
   constructor(private markOrderAsWaiting: MarkOrderAsWaitingUseCase) {}
 
-  @Patch()
+  @Post()
   @Roles("ADMIN")
   @HttpCode(204)
   async handle(@Param("orderId") orderId: string) {

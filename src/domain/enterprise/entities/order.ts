@@ -39,6 +39,11 @@ export class Order extends Entity<OrderProps> {
     return this.props.updatedAt;
   }
 
+  set deliverierId(deliverierId: string | undefined | null) {
+    this.props.deliverierId = deliverierId;
+    this.touch();
+  }
+
   set status(status: OrderStatus) {
     this.props.status = status;
     this.touch();

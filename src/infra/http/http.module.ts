@@ -3,6 +3,7 @@ import { CreateOrderUseCase } from "@/domain/application/useCases/create-order";
 import { CreateRecipientUseCase } from "@/domain/application/useCases/create-recipient";
 import { FetchDeliverierOrdersUseCase } from "@/domain/application/useCases/fetch-deliverier-orders";
 import { MarkOrderAsWaitingUseCase } from "@/domain/application/useCases/mark-order-as-waiting";
+import { PickupOrderUseCase } from "@/domain/application/useCases/pickup-order";
 import { RegisterDeliverierUseCase } from "@/domain/application/useCases/register-deliverier";
 import { ResetUserPasswordUseCase } from "@/domain/application/useCases/reset-user-password";
 import { Module } from "@nestjs/common";
@@ -14,6 +15,7 @@ import { CreateOrderController } from "./controllers/create-order.controller";
 import { CreateRecipientController } from "./controllers/create-recipient.controller";
 import { FetchDeliverierOrdersController } from "./controllers/fetch-deliverier-orders.controller";
 import { MarkOrderAsWaitingController } from "./controllers/mark-order-as-waiting.controller";
+import { PickupOrderController } from "./controllers/pickup-order.controller";
 import { ResetUserPasswordController } from "./controllers/reset-user-password.controller";
 
 @Module({
@@ -26,6 +28,7 @@ import { ResetUserPasswordController } from "./controllers/reset-user-password.c
     ResetUserPasswordController,
     MarkOrderAsWaitingController,
     FetchDeliverierOrdersController,
+    PickupOrderController,
   ],
   providers: [
     RegisterDeliverierUseCase,
@@ -35,6 +38,7 @@ import { ResetUserPasswordController } from "./controllers/reset-user-password.c
     ResetUserPasswordUseCase,
     MarkOrderAsWaitingUseCase,
     FetchDeliverierOrdersUseCase,
+    PickupOrderUseCase,
   ],
 })
 export class HttpModule {}
