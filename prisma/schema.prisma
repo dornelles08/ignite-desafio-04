@@ -77,6 +77,22 @@ model Order {
   deliverier User? @relation(fields: [deliverierId], references: [id])
 
   recipient Recipient @relation(fields: [recipientId], references: [id])
+  photos    Photo[]
 
   @@map("orders")
+}
+
+model Photo {
+  id    String @id @default(uuid())
+  title String
+  url   String
+
+  orderId String @map("order_id")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@map("photos")
 }

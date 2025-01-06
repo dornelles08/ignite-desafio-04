@@ -6,13 +6,19 @@ import { UserPayload } from "@/infra/auth/jwt.strategy";
 import { Roles } from "@/infra/auth/roles.decorator";
 import {
   Controller,
+  FileTypeValidator,
   ForbiddenException,
   HttpCode,
   InternalServerErrorException,
+  MaxFileSizeValidator,
   NotFoundException,
   Param,
+  ParseFilePipe,
   Post,
+  UploadedFile,
+  UseInterceptors,
 } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller("/orders/:orderId/delivery")
 export class DeliveryOrderController {
@@ -21,10 +27,31 @@ export class DeliveryOrderController {
   @Post()
   @HttpCode(204)
   @Roles("DELIVERIER")
-  async handle(@CurrentUser() user: UserPayload, @Param("orderId") orderId: string) {
+  @UseInterceptors(FileInterceptor("file"))
+  async handle(
+    @CurrentUser() user: UserPayload,
+    @Param("orderId") orderId: string,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({
+            maxSize: 1024 * 1024 * 2, // 2MB
+          }),
+          new FileTypeValidator({ fileType: ".(jpeg|png|jpg)" }),
+        ],
+      })
+    )
+    file: Express.Multer.File
+  ) {
     const { sub: userId } = user;
 
-    const result = await this.deliveryOrder.execute({ userId, orderId });
+    const result = await this.deliveryOrder.execute({
+      userId,
+      orderId,
+      fileName: file.originalname,
+      fileType: file.mimetype,
+      body: file.buffer,
+    });
 
     if (result.isLeft()) {
       const error = result.value;

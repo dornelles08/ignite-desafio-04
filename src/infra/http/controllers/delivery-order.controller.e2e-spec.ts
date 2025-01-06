@@ -50,7 +50,7 @@ describe("Delivery Order (E2E)", () => {
     const response = await request(app.getHttpServer())
       .post(`/orders/${order.id}/delivery`)
       .set("Authorization", `Bearer ${access_token}`)
-      .send();
+      .attach("file", "./test/e2e/sample-upload.png");
 
     expect(response.statusCode).toBe(204);
 

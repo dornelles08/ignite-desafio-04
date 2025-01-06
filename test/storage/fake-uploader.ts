@@ -1,4 +1,4 @@
-import { Uploader, UploadParams } from "@/domain/forum/application/storage/uploader";
+import { Uploader, UploadParams } from "@/domain/application/storage/uploader";
 import { faker } from "@faker-js/faker";
 
 interface Upload {
