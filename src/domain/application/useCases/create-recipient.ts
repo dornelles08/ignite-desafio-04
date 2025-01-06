@@ -8,6 +8,7 @@ interface CreateRecipientRequest {
   name: string;
   cpf: string;
   phone: string;
+  email: string;
   street: string;
   number: string;
   complement?: string;
@@ -32,6 +33,7 @@ export class CreateRecipientUseCase {
     name,
     cpf,
     phone,
+    email,
     street,
     number,
     complement,
@@ -45,6 +47,7 @@ export class CreateRecipientUseCase {
         name,
         cpf,
         phone,
+        email,
         street,
         number,
         complement,
@@ -60,8 +63,6 @@ export class CreateRecipientUseCase {
         recipient,
       });
     } catch (error) {
-      console.log(error);
-
       return left(new UnkownError());
     }
   }

@@ -5,6 +5,7 @@ export interface RecipientProps {
   name: string;
   cpf: string;
   phone: string;
+  email: string;
   street: string;
   number: string;
   complement?: string | null;
@@ -36,6 +37,9 @@ export class Recipient extends Entity<RecipientProps> {
   }
   get phone() {
     return this.props.phone;
+  }
+  get email() {
+    return this.props.email;
   }
   get street() {
     return this.props.street;

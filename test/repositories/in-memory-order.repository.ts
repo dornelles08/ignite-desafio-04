@@ -1,3 +1,4 @@
+import { DomainEvents } from "@/core/events/domain-events";
 import { PaginationParams } from "@/core/repositories/pagination-params";
 import { OrderRepository } from "@/domain/application/repositories/order.repository";
 import { Order } from "@/domain/enterprise/entities/order";
@@ -7,6 +8,8 @@ export class InMemoryOrderRepository implements OrderRepository {
 
   async create(order: Order): Promise<void> {
     this.items.push(order);
+
+    DomainEvents.dispatchEventsForAggregate(order.id);
   }
 
   async findById(id: string): Promise<Order | null> {
@@ -35,6 +38,9 @@ export class InMemoryOrderRepository implements OrderRepository {
 
   async save(order: Order): Promise<void> {
     const itemIndex = this.items.findIndex((item) => item.id === order.id);
+
     this.items[itemIndex] = order;
+
+    DomainEvents.dispatchEventsForAggregate(order.id);
   }
 }

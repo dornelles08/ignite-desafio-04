@@ -40,6 +40,7 @@ describe("Create Recipient (E2E)", () => {
         name: "Gael Sebastião Luan Assis",
         cpf: "27832902515",
         phone: "9836173951",
+        email: "email@email.com",
         street: "Rua Paz",
         number: "572",
         complement: "",

@@ -36,7 +36,9 @@ describe("Create Order (E2E)", () => {
     const user = await userFactory.makePrismaUser({ role: "ADMIN" });
     const access_token = jwt.sign({ sub: user.id, role: user.role });
 
-    const recipient = await recipientFacptry.makePrismaRecipient();
+    const recipient = await recipientFacptry.makePrismaRecipient({
+      email: "lipe.dornelles@hotmail.com",
+    });
 
     const response = await request(app.getHttpServer())
       .post("/orders")

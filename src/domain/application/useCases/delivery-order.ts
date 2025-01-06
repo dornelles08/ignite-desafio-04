@@ -67,8 +67,6 @@ export class DeliveryOrderUseCase {
 
       return right({ order, photo });
     } catch (error) {
-      console.log(error);
-
       return left(new UnkownError());
     }
   }

@@ -22,6 +22,7 @@ describe("Create Recipient", () => {
       cpf: recipient.cpf,
       district: recipient.district,
       name: recipient.name,
+      email: recipient.email,
       number: recipient.number,
       phone: recipient.phone,
       state: recipient.state,

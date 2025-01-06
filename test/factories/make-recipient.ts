@@ -10,6 +10,7 @@ export function makeRecipient(override: Partial<RecipientProps> = {}, id?: strin
     {
       name: faker.person.fullName(),
       cpf: generateCPF(false),
+      email: faker.internet.email(),
       city: faker.location.city(),
       complement: "",
       district: faker.lorem.slug(),

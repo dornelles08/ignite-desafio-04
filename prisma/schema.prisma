@@ -41,6 +41,7 @@ model Recipient {
   name       String
   cpf        String
   phone      String
+  email      String
   street     String
   number     String
   complement String?

@@ -8,6 +8,7 @@ const createRecipientBodySchema = z.object({
   name: z.string(),
   cpf: z.string(),
   phone: z.string(),
+  email: z.string().email(),
   street: z.string(),
   number: z.string(),
   complement: z.string().optional(),
@@ -27,13 +28,15 @@ export class CreateRecipientController {
   @Post()
   @HttpCode(201)
   async handle(@Body(bodyValidationPipe) body: CreateRecipientBodySchema) {
-    const { city, cpf, district, name, number, phone, state, street, zipCode, complement } = body;
+    const { city, cpf, district, name, email, number, phone, state, street, zipCode, complement } =
+      body;
 
     const result = await this.createRecipient.execute({
       city,
       cpf,
       district,
       name,
+      email,
       number,
       phone,
       state,

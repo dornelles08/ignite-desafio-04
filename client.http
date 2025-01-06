@@ -4,11 +4,12 @@
 # @name create_account
 POST {{baseUrl}}/accounts
 Content-Type: application/json
+Authorization: Bearer {{authToken}}
 
 {
-  "name": "Felipe Teles",
-  "email": "lipe.dornelles08@gmail.com",
-  "cpf": "60467802092",
+  "name": "Felipe Dornelles",
+  "email": "lipe.dornelles@hotmail.com",
+  "cpf": "20911857010",
   "password": "123456"
 }
 
@@ -19,17 +20,59 @@ POST {{baseUrl}}/authenticate
 Content-Type: application/json
 
 {
-  "cpf": "60467802092", 
+  "cpf": "20911857010", 
   "password": "123456"
 }
 
 ###
 
-# @name fetch_recent_question
-PATCH {{baseUrl}}/order/1/status
+# @name create_recipient
+POST {{baseUrl}}/recipient
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "status": "created"
+  "name":"Caleb Osvaldo Calebe Pires",
+  "cpf":"21366370880",
+  "phone":"9826163025",
+  "email":"lipe.dornelles@hotmail.com",
+  "street":"Rua Um",
+  "number":"586",
+  "complement":"",
+  "district":"Vila Ipiranga",
+  "city":"Imperatriz",
+  "state":"MA",
+  "zipCode":"65908057"
 }
+
+###
+
+# @name create_order
+POST {{baseUrl}}/orders
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "recipientId": "deaa58e4-15d0-4bf0-8393-70cf1bdae09b"
+}
+
+###
+
+# @name mark_order_as_waiting
+POST {{baseUrl}}/orders/e7d9eec3-df36-426c-a8e1-5fe139a16551/waiting
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name pickup_order
+POST {{baseUrl}}/orders/e7d9eec3-df36-426c-a8e1-5fe139a16551/pickup
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name pickup_order
+POST {{baseUrl}}/orders/e7d9eec3-df36-426c-a8e1-5fe139a16551/pickup
+Content-Type: application/json
+Authorization: Bearer {{authToken}}

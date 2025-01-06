@@ -6,6 +6,7 @@ export class PrismaRecipientMapper {
     return {
       id: recipient.id,
       name: recipient.name,
+      email: recipient.email,
       cpf: recipient.cpf,
       city: recipient.city,
       district: recipient.district,
@@ -29,6 +30,7 @@ export class PrismaRecipientMapper {
         district: raw.district,
         number: raw.number,
         phone: raw.phone,
+        email: raw.email,
         state: raw.state,
         street: raw.street,
         zipCode: raw.zipCode,
