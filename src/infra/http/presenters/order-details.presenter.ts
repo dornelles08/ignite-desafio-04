@@ -4,13 +4,13 @@ export class OrderDetailsPresenter {
   static toHTTP(order: OrderDetails) {
     return {
       id: order.orderId,
-      recipientId: order.recipientId,
       deliverierId: order.deliverierId,
       status: order.status,
 
       photoUrl: order.url,
 
       recipient: {
+        recipientId: order.recipientId,
         name: order.name,
         phone: order.phone,
         street: order.street,

@@ -37,7 +37,7 @@ export class OrderDetails extends ValueObject<OrderDetailsProps> {
     return this.props.deliverierId;
   }
   get status() {
-    return this.props;
+    return this.props.status;
   }
 
   get url() {

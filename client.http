@@ -76,3 +76,10 @@ Authorization: Bearer {{authToken}}
 POST {{baseUrl}}/orders/d7011e3b-780c-4e8a-abd7-3f5161c9a74c/return
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
+
+###
+
+# @name fetch_deliverier_orders
+GET {{baseUrl}}/orders
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
