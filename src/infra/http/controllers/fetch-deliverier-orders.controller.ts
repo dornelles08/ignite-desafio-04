@@ -1,6 +1,7 @@
 import { FetchDeliverierOrdersUseCase } from "@/domain/application/useCases/fetch-deliverier-orders";
 import { CurrentUser } from "@/infra/auth/current-user.decorator";
 import { UserPayload } from "@/infra/auth/jwt.strategy";
+import { Roles } from "@/infra/auth/roles.decorator";
 import { Controller, Get, InternalServerErrorException, Query } from "@nestjs/common";
 import { z } from "zod";
 import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
@@ -21,6 +22,7 @@ export class FetchDeliverierOrdersController {
   constructor(private fetchDeliverierOrders: FetchDeliverierOrdersUseCase) {}
 
   @Get()
+  @Roles("DELIVERIER")
   async handle(
     @CurrentUser() user: UserPayload,
     @Query("page", queryValidationPipe) page: PageQueryParamsSchema

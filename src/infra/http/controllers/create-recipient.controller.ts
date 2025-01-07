@@ -21,12 +21,12 @@ const bodyValidationPipe = new ZodValidationPipe(createRecipientBodySchema);
 type CreateRecipientBodySchema = z.infer<typeof createRecipientBodySchema>;
 
 @Controller("/recipient")
-@Roles("ADMIN")
 export class CreateRecipientController {
   constructor(private createRecipient: CreateRecipientUseCase) {}
 
   @Post()
   @HttpCode(201)
+  @Roles("ADMIN")
   async handle(@Body(bodyValidationPipe) body: CreateRecipientBodySchema) {
     const { city, cpf, district, name, email, number, phone, state, street, zipCode, complement } =
       body;

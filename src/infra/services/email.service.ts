@@ -1,8 +1,10 @@
 import { EmailService } from "@/domain/application/services/email.service";
 
+import { Injectable } from "@nestjs/common";
 import { Transporter, createTransport } from "nodemailer";
 import { EnvService } from "../env/env.service";
 
+@Injectable()
 export class NodemailerEmailService implements EmailService {
   private transporter: Transporter;
 

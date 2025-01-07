@@ -4,7 +4,7 @@ import { EnvModule } from "../env/env.module";
 import { NodemailerEmailService } from "./email.service";
 
 @Module({
-  imports: [EnvModule],
+  imports: [EnvModule, ServicesModule],
   providers: [
     {
       provide: EmailService,

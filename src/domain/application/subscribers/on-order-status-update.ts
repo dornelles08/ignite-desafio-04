@@ -1,10 +1,12 @@
 import { emailTemplate } from "@/core/email.template";
 import { DomainEvents } from "@/core/events/domain-events";
 import { EventHandler } from "@/core/events/event-handler";
+import { Injectable } from "@nestjs/common";
 import { OrderStatusUpdateEvent } from "../events/order-status-update.event";
 import { RecipientRepository } from "../repositories/recipient.repository";
 import { SendNotificationUseCase } from "../useCases/send-notification";
 
+@Injectable()
 export class OnOrderStatusUpdate implements EventHandler {
   constructor(
     private recipientRepository: RecipientRepository,
@@ -18,8 +20,6 @@ export class OnOrderStatusUpdate implements EventHandler {
   }
 
   private async handle({ order }: OrderStatusUpdateEvent): Promise<void> {
-    console.log("handle");
-
     const recipient = await this.recipientRepository.findById(order.recipientId);
 
     if (recipient) {

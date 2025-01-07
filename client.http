@@ -59,20 +59,20 @@ Authorization: Bearer {{authToken}}
 ###
 
 # @name mark_order_as_waiting
-POST {{baseUrl}}/orders/e7d9eec3-df36-426c-a8e1-5fe139a16551/waiting
+POST {{baseUrl}}/orders/d7011e3b-780c-4e8a-abd7-3f5161c9a74c/waiting
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 ###
 
 # @name pickup_order
-POST {{baseUrl}}/orders/e7d9eec3-df36-426c-a8e1-5fe139a16551/pickup
+POST {{baseUrl}}/orders/d7011e3b-780c-4e8a-abd7-3f5161c9a74c/pickup
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 ###
 
-# @name pickup_order
-POST {{baseUrl}}/orders/e7d9eec3-df36-426c-a8e1-5fe139a16551/pickup
+# @name return_order
+POST {{baseUrl}}/orders/d7011e3b-780c-4e8a-abd7-3f5161c9a74c/return
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
