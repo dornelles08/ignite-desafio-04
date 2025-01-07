@@ -1,5 +1,5 @@
 import { Either, right } from "@/core/either";
-import { Order } from "@/domain/enterprise/entities/order";
+import { OrderDetails } from "@/domain/enterprise/entities/value-onjects/order-details";
 import { Injectable } from "@nestjs/common";
 import { OrderRepository } from "../repositories/order.repository";
 
@@ -11,7 +11,7 @@ interface FetchDeliverierOrdersRequest {
 type FetchDeliverierOrdersResponse = Either<
   null,
   {
-    orders: Order[];
+    orders: OrderDetails[];
   }
 >;
 
@@ -23,7 +23,9 @@ export class FetchDeliverierOrdersUseCase {
     deliverierId,
     page,
   }: FetchDeliverierOrdersRequest): Promise<FetchDeliverierOrdersResponse> {
-    const orders = await this.orderRepository.findByDeliverierId(deliverierId, { page });
+    const orders = await this.orderRepository.findManyByDeliverierIdWithDetails(deliverierId, {
+      page,
+    });
 
     return right({
       orders,

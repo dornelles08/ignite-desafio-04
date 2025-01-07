@@ -1,6 +1,6 @@
 import { Entity } from "src/core/entities/entity";
 import { Optional } from "src/core/types/optional";
-import { Role } from "./role";
+import { Role } from "./value-onjects/role";
 
 export interface UserProps {
   name: string;

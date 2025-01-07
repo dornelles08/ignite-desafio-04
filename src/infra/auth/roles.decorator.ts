@@ -1,4 +1,4 @@
-import { Role } from "@/domain/enterprise/entities/role";
+import { Role } from "@/domain/enterprise/entities/value-onjects/role";
 import { SetMetadata } from "@nestjs/common";
 
 export const ROLES_KEY = "roles";

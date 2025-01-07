@@ -1,4 +1,4 @@
-import { Role } from "@/domain/enterprise/entities/role";
+import { Role } from "@/domain/enterprise/entities/value-onjects/role";
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { UserPayload } from "./jwt.strategy";

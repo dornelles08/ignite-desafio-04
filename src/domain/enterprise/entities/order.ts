@@ -1,7 +1,7 @@
 import { AggregateRoot } from "@/core/entities/aggregate-root";
 import { Optional } from "@/core/types/optional";
 import { OrderStatusUpdateEvent } from "@/domain/application/events/order-status-update.event";
-import { OrderStatus } from "./orderStatus";
+import { OrderStatus } from "./value-onjects/orderStatus";
 
 export interface OrderProps {
   recipientId: string;

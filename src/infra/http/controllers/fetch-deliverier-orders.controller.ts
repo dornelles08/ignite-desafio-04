@@ -5,7 +5,7 @@ import { Roles } from "@/infra/auth/roles.decorator";
 import { Controller, Get, InternalServerErrorException, Query } from "@nestjs/common";
 import { z } from "zod";
 import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
-import { OrderPresenter } from "../presenters/order.presenter";
+import { OrderDetailsPresenter } from "../presenters/order-details.presenter";
 
 const pageQueryParamSchema = z
   .string()
@@ -41,7 +41,7 @@ export class FetchDeliverierOrdersController {
     const { orders } = result.value;
 
     return {
-      orders: orders.map(OrderPresenter.toHTTP),
+      orders: orders.map(OrderDetailsPresenter.toHTTP),
     };
   }
 }

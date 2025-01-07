@@ -2,7 +2,9 @@ import { DomainEvents } from "@/core/events/domain-events";
 import { PaginationParams } from "@/core/repositories/pagination-params";
 import { OrderRepository } from "@/domain/application/repositories/order.repository";
 import { Order } from "@/domain/enterprise/entities/order";
+import { OrderDetails } from "@/domain/enterprise/entities/value-onjects/order-details";
 import { Injectable } from "@nestjs/common";
+import { PrismaOrderDetailsMapper } from "../mappers/prisma-order-details.mapper";
 import { PrismaOrderMapper } from "../mappers/prisma-order.mapper";
 import { PrismaService } from "../prisma.service";
 
@@ -62,5 +64,27 @@ export class PrismaOrderRepository implements OrderRepository {
     });
 
     DomainEvents.dispatchEventsForAggregate(order.id);
+  }
+
+  async findManyByDeliverierIdWithDetails(
+    deliverierId: string,
+    params: PaginationParams
+  ): Promise<OrderDetails[]> {
+    let orders = await this.prisma.order.findMany({
+      where: {
+        deliverierId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 20,
+      skip: (params.page - 1) * 20,
+      include: {
+        photos: true,
+        recipient: true,
+      },
+    });
+
+    return orders.map(PrismaOrderDetailsMapper.toDomain);
   }
 }
